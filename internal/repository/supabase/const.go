@@ -1,0 +1,4 @@
+package supabase
+
+const url = "https://mkwvhlizfipwufxmoayf.supabase.co"
+const key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1rd3ZobGl6Zmlwd3VmeG1vYXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTgyOTMxNDMsImV4cCI6MjAxMzg2OTE0M30.xR-RqnDkXrQg6O8sSaehHs5DRitatX4R1B5j5TJDvkk"
