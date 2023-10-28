@@ -1,4 +1,4 @@
-## Noted Pembuatan Aplikasi:
+##Noted Pembuatan Aplikasi:
 1. List Penggunaan REST:
     - Registrasi dan authentikasi User
     - Pengiriman chat dengan REST
@@ -6,7 +6,7 @@
 2. Database menggunakan supabase untuk chat dan data user
 3. Postgres Local untuk menyimpan history chat
 
-### Keamanan:
+## Keamanan:
 - menggunakan JWT
 - durasi exp 24 jam
 
@@ -18,7 +18,7 @@
 
 ```UNTUK WEBSOCKET DIGUNAKAN KETIKA ADA SEND MESSAGE PADA SERVICE DIMANA LANGSUNG DIMASUKAN KEITKA ADA INSERT CHAT BARU```
 
-### Database
+## Database
 ```
 TABLE CHAT (
    ID INT,
