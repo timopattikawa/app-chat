@@ -47,7 +47,7 @@ func (c ChatService) SendMessage(chatDto dto.ChatDto) (dto.ChatDto, error) {
 	defer func(conn *websocket.Conn) {
 		err := conn.Close()
 		if err != nil {
-			log.Println("ADA ERR")
+			log.Println("Error: ", err)
 		}
 	}(conn)
 
@@ -75,12 +75,9 @@ func (c ChatService) SendMessage(chatDto dto.ChatDto) (dto.ChatDto, error) {
 		return dto.ChatDto{}, err
 	}
 
-	log.Println("into the")
-	//defer close(done)
 	saved := false
 	var result = dto.ChatDto{}
 	for {
-		log.Println()
 		var message map[string]map[string]map[string]map[string]interface{}
 		if err := conn.ReadJSON(&message); err != nil {
 			log.Println("message read error")
