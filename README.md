@@ -1,4 +1,4 @@
-##Noted Pembuatan Aplikasi:
+## Noted Pembuatan Aplikasi:
 1. List Penggunaan REST:
     - Registrasi dan authentikasi User
     - Pengiriman chat dengan REST
