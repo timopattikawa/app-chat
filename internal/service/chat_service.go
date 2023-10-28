@@ -1,7 +1,6 @@
 package service
 
 import (
-	"context"
 	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/timopattikawa/jubelio-chatapp/domain"
@@ -76,57 +75,51 @@ func (c ChatService) SendMessage(chatDto dto.ChatDto) (dto.ChatDto, error) {
 		return dto.ChatDto{}, err
 	}
 
-	ctx, cfunc := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cfunc()
-	log.Println("masuk routine")
+	log.Println("into the")
 	//defer close(done)
 	saved := false
 	var result = dto.ChatDto{}
 	for {
-		select {
-		case <-ctx.Done():
-			break
-		default:
-			log.Println("masuk loop")
-			var message map[string]map[string]map[string]map[string]interface{}
-			if err := conn.ReadJSON(&message); err != nil {
-				log.Println("message read error:", err)
-			}
-			log.Println("recv: ", message)
-			record := message["payload"]["data"]["record"]
-			if record != nil {
-				id := uint(record["id"].(float64))
-				receiver := uint(record["receiver"].(float64))
-				sender := uint(record["sender"].(float64))
-				message := fmt.Sprintf("%v", record["message"])
-				createdAt := fmt.Sprintf("%v", record["created_at"])
-				chat := domain.Chat{
-					ID:       id,
-					Sender:   receiver,
-					Receiver: sender,
-					Message:  message,
-					CreateAt: createdAt,
-				}
-				_, err = c.psqlRepository.SaveMessagePsql(chat)
-				if err != nil {
-					return dto.ChatDto{}, err
-				}
-				break
-			}
+		log.Println()
+		var message map[string]map[string]map[string]map[string]interface{}
+		if err := conn.ReadJSON(&message); err != nil {
+			log.Println("message read error")
+		}
+		record := message["payload"]["data"]["record"]
 
-			if !saved {
-				resultDataSave, err := c.supRepository.SaveMessage(chatDto)
-				if err != nil {
-					log.Println(err.Error())
-					return dto.ChatDto{}, err
-				}
-				result = dto.ChatDto{
-					Sender:   resultDataSave.Sender,
-					Receiver: resultDataSave.Receiver,
-					Message:  resultDataSave.Message,
-				}
-				saved = true
+		if record != nil {
+			id := uint(record["id"].(float64))
+			receiver := uint(record["receiver"].(float64))
+			sender := uint(record["sender"].(float64))
+			message := fmt.Sprintf("%v", record["message"])
+			createdAt := fmt.Sprintf("%v", record["created_at"])
+			chat := domain.Chat{
+				ID:       id,
+				Sender:   receiver,
+				Receiver: sender,
+				Message:  message,
+				CreateAt: createdAt,
 			}
+			_, err := c.psqlRepository.SaveMessagePsql(chat)
+			if err != nil {
+				log.Println("Fail To save on psql", err)
+			}
+			log.Println(chat)
+			break
+		}
+
+		if !saved {
+			resultDataSave, err := c.supRepository.SaveMessage(chatDto)
+			if err != nil {
+				log.Println(err.Error())
+				return dto.ChatDto{}, err
+			}
+			result = dto.ChatDto{
+				Sender:   resultDataSave.Sender,
+				Receiver: resultDataSave.Receiver,
+				Message:  resultDataSave.Message,
+			}
+			saved = true
 		}
 	}
 
