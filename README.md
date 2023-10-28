@@ -32,5 +32,9 @@ Libraries Used:
 - go get github.com/gofiber/contrib/websocket
 - go get github.com/overseedio/realtime-go
 - go get github.com/stretchr/testify/assert
-- go get github.com/golang-jwt/jwt 
+- go get github.com/golang-jwt/jwt
+- go get "github.com/gorilla/websocket"
+- go get github.com/lib/pq
+- go get github.com/gofiber/jwt/v2
+- go get gopkg.in/DATA-DOG/go-sqlmock.v1
 
