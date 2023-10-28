@@ -1,7 +1,7 @@
 ```
 Noted Penting Pak: 
 Pada bagian /message/send enpoint service dapat melakukan save 
-pada supabase lalu websocket dapat mengambil data dan menyimpan di
+pada supabase, lalu websocket juga dapat mengambil data dari supabase dan menyimpan di
 local DB. Tetapi request masih ada bug yaitu tidak mau berhenti atau
 memberikan response balikan pada saat request 
 
