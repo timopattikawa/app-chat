@@ -11,7 +11,6 @@ import (
 var APPLICATION_NAME = "JUBELIO CHAT APP"
 var LOGIN_EXPIRATION_DURATION = time.Duration(24) * time.Hour
 var JWT_SIGNING_METHOD = jwt.SigningMethodHS256
-var JWT_SIGNATURE_KEY = []byte("the secret of app")
 
 type MyClaims struct {
 	jwt.StandardClaims
@@ -20,7 +19,7 @@ type MyClaims struct {
 }
 
 func GenerateJwt(id uint, username string) ([]byte, error) {
-	secretKey := viper.Get("jwt_key")
+	secretKey := viper.GetString("jwt_key")
 	if secretKey == "" {
 		log.Fatal("Error get secret key")
 	}
@@ -38,7 +37,7 @@ func GenerateJwt(id uint, username string) ([]byte, error) {
 		claims,
 	)
 
-	signedToken, err := token.SignedString(JWT_SIGNATURE_KEY)
+	signedToken, err := token.SignedString([]byte(secretKey))
 	if err != nil {
 		log.Println("Fail to create token string", err)
 		return []byte(""), err

@@ -3,13 +3,15 @@ package middleware
 import (
 	"github.com/gofiber/fiber/v2"
 	jwtware "github.com/gofiber/jwt/v2"
+	"github.com/spf13/viper"
 	"log"
 )
 
 func JWTProtected() func(*fiber.Ctx) error {
+	jwtKey := viper.GetString("jwt_key")
 	config := jwtware.Config{
 		ErrorHandler: jwtError,
-		SigningKey:   []byte("the secret of app"),
+		SigningKey:   []byte(jwtKey),
 	}
 
 	return jwtware.New(config)

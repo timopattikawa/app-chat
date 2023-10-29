@@ -23,7 +23,7 @@ func (u UserService) RegistrationUser(req dto.AuthReq) (string, error) {
 		log.Println("Fail To save user internal server error", err)
 		return "", err
 	}
-	return "register succes", nil
+	return "register success", nil
 }
 
 func (u UserService) AuthUser(req dto.AuthReq) (dto.AuthRes, error) {
